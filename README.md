@@ -38,21 +38,21 @@ Open your browser and navigate to http://127.0.0.1:8000/docs to view the automat
 
 
 ## Project structure
-football-api/
-├── app/
-│   ├── __init__.py
-│   ├── main.py
-│   ├── database.py
-│   └── routers/
-│       ├── __init__.py
-│       ├── players/
-│       │   ├── __init__.py
-|       │   ├── players.py
-│       │   └── models.py
-│       └── teams/
-│           ├── __init__.py
-|           ├── players.py
-│           └── models.py
-├── .gitignore
-├── requirements.txt
-└── README.md
+### football-api/
+#### ├── app/
+#### │   ├── __init__.py
+#### │   ├── main.py
+#### │   ├── database.py
+#### │   └── routers/
+#### │       ├── __init__.py
+#### │       ├── players/
+#### │       │   ├── __init__.py
+#### |       │   ├── players.py
+#### │       │   └── models.py
+#### │       └── teams/
+#### │           ├── __init__.py
+#### |           ├── players.py
+#### │           └── models.py
+#### ├── .gitignore
+#### ├── requirements.txt
+#### └── README.md
