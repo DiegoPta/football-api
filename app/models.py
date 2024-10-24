@@ -1,19 +1,21 @@
 """
-Script defining the Pydantic (SQLModel) and database models.
+Script defining the Pydantic (SQLModel) and database models to Team.
 """
 
 # Python imports.
 from sqlmodel import SQLModel, Field, Relationship
-from datetime import date
 from sqlalchemy import MetaData
+from datetime import date
+
 
 metadata = MetaData()
+
 
 class TeamBase(SQLModel):
     name: str = Field(index=True, max_length=30)
     country: str = Field(index=True, max_length=20)
     city: str = Field(index=True, max_length=20)
-    stadium: str = Field(max_length=20)
+    stadium: str = Field(max_length=30)
     color: str = Field(max_length=20)
     coach: str = Field(max_length=30) 
 
@@ -29,8 +31,6 @@ class TeamUpdates(TeamBase):
 
 class Team(TeamBase):
     id: int
-    is_active: bool
-    players: list['Player']
 
 
 class TeamDB(TeamBase, table=True, metadata=metadata):

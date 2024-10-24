@@ -39,20 +39,23 @@ Open your browser and navigate to http://127.0.0.1:8000/docs to view the automat
 
 ## Project structure
 ### football-api/
+#### ├── alembic/
 #### ├── app/
+#### │   ├── database/
+#### │   |   ├── operations/
+#### │   |   |   ├── __init__.py
+#### |   |   |   ├── players.py
+#### │   |   |   └── teams.py
+#### │   |   └── database.py
+#### │   |── routers/
+#### │   |   ├── __init__.py
+#### │   |   ├── players.py
+#### │   |   └── teams.py
 #### │   ├── __init__.py
 #### │   ├── main.py
-#### │   ├── database.py
-#### │   └── routers/
-#### │       ├── __init__.py
-#### │       ├── players/
-#### │       │   ├── __init__.py
-#### |       │   ├── players.py
-#### │       │   └── models.py
-#### │       └── teams/
-#### │           ├── __init__.py
-#### |           ├── players.py
-#### │           └── models.py
+#### │   └── models.py
 #### ├── .gitignore
-#### ├── requirements.txt
-#### └── README.md
+#### ├── alembic.ini
+#### ├── database.db
+#### |── README.md
+#### └── requirements.txt

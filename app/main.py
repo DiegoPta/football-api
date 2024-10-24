@@ -7,7 +7,7 @@ from fastapi import FastAPI
 
 # Project imports.
 from .routers import teams
-from .database import create_db_and_tables
+from .database.database import create_db_and_tables
 
 
 app = FastAPI()

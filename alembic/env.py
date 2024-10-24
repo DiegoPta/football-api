@@ -2,8 +2,8 @@ from logging.config import fileConfig
 
 from alembic import context
 
-from models import metadata  # Importa todos tus modelos
-from database import engine
+from app.models import metadata
+from app.database.database import engine
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
