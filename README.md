@@ -54,6 +54,10 @@ Open your browser and navigate to http://127.0.0.1:8000/docs to view the automat
 #### │   ├── __init__.py
 #### │   ├── main.py
 #### │   └── models.py
+#### ├── tests/
+#### │   ├── __init__.py
+#### │   ├── test_players.py
+#### │   └── test_teams.py
 #### ├── .gitignore
 #### ├── alembic.ini
 #### ├── database.db

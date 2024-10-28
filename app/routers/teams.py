@@ -17,12 +17,12 @@ router = APIRouter(prefix='/teams', tags=['Teams'])
 
 
 @router.post('/', status_code=status.HTTP_201_CREATED)
-def create_team(team: TeamBase = Body(), db_session: Session = Depends(get_session)) -> Team:
+def create_team(team_data: TeamBase = Body(), db_session: Session = Depends(get_session)) -> Team:
     """
     Creates a new team in the database.
-    - **team**:    Team object to be added into the database.
+    - **team_data**:    Team object to be added into the database.
     """
-    return db_teams.create_team(db_session, team)
+    return db_teams.create_team(db_session, team_data)
 
 
 @router.get('/{team_id}/', status_code=status.HTTP_200_OK)
@@ -33,7 +33,7 @@ def get_team_by_id(team_id: int = Path(), db_session: Session = Depends(get_sess
     """
     if team := db_teams.get_team_by_id(db_session, team_id):
         return team
-    raise HTTPException(status_code=404, detail="Team not found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Team not found")
 
 
 @router.get('/', status_code=status.HTTP_200_OK)
@@ -54,7 +54,10 @@ def get_teams(db_session: Session = Depends(get_session),
     - **coach**:       Team coach to filter.
     """
     filters = {"name": name, "country": country, "city": city, "stadium": stadium, "color": color, "coach": coach}
-    return db_teams.get_teams(db_session, filters)
+    teams = db_teams.get_teams(db_session, filters)
+    if teams or teams == []:
+        return teams
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Failed request')
 
 
 @router.get('/{team_id}/players/', status_code=status.HTTP_200_OK)
@@ -65,7 +68,7 @@ def get_players_by_team_id(team_id: int = Path(), db_session: Session = Depends(
     """
     if team := db_teams.get_team_by_id(db_session, team_id):
         return team.players
-    raise HTTPException(status_code=404, detail="Team not found")
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Team not found")
 
 
 @router.patch('/{team_id}/', status_code=status.HTTP_200_OK)
@@ -81,7 +84,7 @@ def update_team(team_id: int = Path(), team_updates: TeamUpdates = Body(), db_se
     
 
 @router.delete('/{team_id}/', status_code=status.HTTP_200_OK)
-def delete_team(team_id: int = Path(), db_session: Session = Depends(get_session)) -> TeamBase:
+def delete_team(team_id: int = Path(), db_session: Session = Depends(get_session)) -> Team:
     """
     Deletes (inactivates) a team by ID.
     - **team_id**:     Identifier of the team.
