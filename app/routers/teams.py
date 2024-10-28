@@ -74,7 +74,7 @@ def get_players_by_team_id(team_id: int = Path(), db_session: Session = Depends(
 @router.patch('/{team_id}/', status_code=status.HTTP_200_OK)
 def update_team(team_id: int = Path(), team_updates: TeamUpdates = Body(), db_session: Session = Depends(get_session)) -> Team:
     """
-    Gets a list with all teams availables or filtered by one parameter.
+    Updates a team by id.
     - **team_id**:      Identifier of the team.
     - **team_updates**: Object with fields and data to update.
     """

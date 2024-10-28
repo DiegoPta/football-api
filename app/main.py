@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
 # Project imports.
-from .routers import teams
+from .routers import teams, players
 from .database.database import create_db_and_tables
 
 
@@ -25,3 +25,4 @@ app = FastAPI(lifespan=lifespan)
 
 
 app.include_router(teams.router)
+app.include_router(players.router)
