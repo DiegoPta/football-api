@@ -48,12 +48,22 @@ class PlayerBase(SQLModel):
     nationality: str = Field(max_length=30)
     position: str = Field(max_length=20)
     dorsal: int = Field()
+    team_id: int = Field()
+
+
+class PlayerUpdates(PlayerBase):
+    firstname: str = None
+    lastname: str = None
+    birthdate: date = None
+    height: float = None
+    nationality: str = None
+    position: str = None
+    dorsal: int = None
+    team_id: int = None
 
 
 class Player(PlayerBase):
     id: int
-    is_active: bool
-    team_id: int
 
 
 class PlayerDB(PlayerBase, table=True, metadata=metadata):

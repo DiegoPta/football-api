@@ -69,7 +69,7 @@ def update_team(db: Session, team_id: int, team_updates: TeamUpdates) -> Team:
         return team
     
 
-def delete_team(db: Session, team_id: int) -> TeamBase:
+def delete_team(db: Session, team_id: int) -> Team:
     """
     Deletes (inactivates) a team by ID.
     @param db:      Database session.

@@ -27,7 +27,8 @@ def test_create_team():
     team_to_create = {"name": "Name", "country": "Country", "city": "City", "stadium": "Stadium", "color": "Color", "coach": "Coach"}
     response = client.post("/teams/", json=team_to_create)
     json_response = response.json()
-    delete_created_db_record(TeamDB, json_response.pop("id"))
+    # delete_created_db_record(TeamDB, json_response.pop("id"))
+    json_response.pop("id")
     assert response.status_code == 201
     assert json_response == team_to_create
 
