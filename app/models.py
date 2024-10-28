@@ -64,7 +64,6 @@ class PlayerUpdates(PlayerBase):
 
 class Player(PlayerBase):
     id: int
-    is_active: bool
 
 
 class PlayerDB(PlayerBase, table=True, metadata=metadata):
