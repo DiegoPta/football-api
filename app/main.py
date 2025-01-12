@@ -3,11 +3,12 @@ Main script that runs the application.
 """
 
 # Python imports.
-from fastapi import FastAPI
+from fastapi import FastAPI, status, Body, HTTPException
 from contextlib import asynccontextmanager
 
+
 # Project imports.
-from .routers import teams, players
+from .routers import auth, teams, players
 from .database.database import create_db_and_tables
 
 
@@ -24,5 +25,6 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
+app.include_router(auth.router)
 app.include_router(teams.router)
 app.include_router(players.router)

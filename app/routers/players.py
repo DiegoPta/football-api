@@ -4,11 +4,11 @@ Implements the router in charge of player management.
 
 # Python imports.
 from sqlmodel import Session
-from fastapi import APIRouter, Depends, Body, Path, Query, status, HTTPException
+from fastapi import APIRouter, Depends, Body, Path, Query, Security, status, HTTPException
 
 # Project imports.
+from .auth import verify_token_dependency
 from ..database.database import get_session
-from ..database.operations import teams as db_teams
 from ..database.operations import players as db_players
 from ..models import Player, PlayerBase, PlayerUpdates
 
@@ -16,7 +16,7 @@ from ..models import Player, PlayerBase, PlayerUpdates
 router = APIRouter(prefix='/players', tags=['Players'])
 
 
-@router.post('/', status_code=status.HTTP_201_CREATED)
+@router.post('/', status_code=status.HTTP_201_CREATED, dependencies=[Depends(verify_token_dependency)])
 def create_player(player_data: PlayerBase = Body(), db_session: Session = Depends(get_session)) -> Player:
     """
     Creates a new player in the database.
@@ -56,7 +56,7 @@ def get_players(db_session: Session = Depends(get_session),
     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Failed request')
 
 
-@router.patch('/{player_id}/', status_code=status.HTTP_200_OK)
+@router.patch('/{player_id}/', status_code=status.HTTP_200_OK, dependencies=[Depends(verify_token_dependency)])
 def update_player(player_id: int = Path(), player_updates: PlayerUpdates = Body(), db_session: Session = Depends(get_session)) -> Player:
     """
     Updates a player by id.
@@ -68,7 +68,7 @@ def update_player(player_id: int = Path(), player_updates: PlayerUpdates = Body(
     raise HTTPException(status_code=404, detail="Player not found")
     
 
-@router.delete('/{player_id}/', status_code=status.HTTP_200_OK)
+@router.delete('/{player_id}/', status_code=status.HTTP_200_OK, dependencies=[Security(verify_token_dependency)])
 def delete_player(player_id: int = Path(), db_session: Session = Depends(get_session)) -> Player:
     """
     Deletes (inactivates) a player by ID.

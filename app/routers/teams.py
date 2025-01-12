@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, Body, Path, Query, status, HTTPException
 from sqlmodel import Session
 
 # Project imports.
+from .auth import verify_token_dependency
 from ..database.database import get_session
 from ..database.operations import teams as db_teams
 from ..models import TeamBase, Team, TeamUpdates, Player
@@ -16,7 +17,7 @@ from ..models import TeamBase, Team, TeamUpdates, Player
 router = APIRouter(prefix='/teams', tags=['Teams'])
 
 
-@router.post('/', status_code=status.HTTP_201_CREATED)
+@router.post('/', status_code=status.HTTP_201_CREATED, dependencies=[Depends(verify_token_dependency)])
 def create_team(team_data: TeamBase = Body(), db_session: Session = Depends(get_session)) -> Team:
     """
     Creates a new team in the database.
@@ -71,7 +72,7 @@ def get_players_by_team_id(team_id: int = Path(), db_session: Session = Depends(
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Team not found")
 
 
-@router.patch('/{team_id}/', status_code=status.HTTP_200_OK)
+@router.patch('/{team_id}/', status_code=status.HTTP_200_OK, dependencies=[Depends(verify_token_dependency)])
 def update_team(team_id: int = Path(), team_updates: TeamUpdates = Body(), db_session: Session = Depends(get_session)) -> Team:
     """
     Updates a team by id.
@@ -83,7 +84,7 @@ def update_team(team_id: int = Path(), team_updates: TeamUpdates = Body(), db_se
     raise HTTPException(status_code=404, detail="Team not found")
     
 
-@router.delete('/{team_id}/', status_code=status.HTTP_200_OK)
+@router.delete('/{team_id}/', status_code=status.HTTP_200_OK, dependencies=[Depends(verify_token_dependency)])
 def delete_team(team_id: int = Path(), db_session: Session = Depends(get_session)) -> Team:
     """
     Deletes (inactivates) a team by ID.
