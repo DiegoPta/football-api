@@ -3,7 +3,8 @@ Main script that runs the application.
 """
 
 # Python imports.
-from fastapi import FastAPI, status, Body, HTTPException
+from fastapi import FastAPI, status
+from fastapi.responses import RedirectResponse
 from contextlib import asynccontextmanager
 
 
@@ -23,6 +24,14 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(lifespan=lifespan)
+
+
+@app.get('/', status_code=status.HTTP_200_OK, include_in_schema=False)
+def root() -> dict:
+    """
+    Root endpoint.
+    """
+    return RedirectResponse(url='/docs')
 
 
 app.include_router(auth.router)

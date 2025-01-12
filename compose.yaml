@@ -1,0 +1,10 @@
+services:
+  football-api:
+    container_name: football-api-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:8080"
+    volumes:
+      - .:/app
