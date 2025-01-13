@@ -8,8 +8,11 @@ from dotenv import load_dotenv
 from fastapi import Request
 from fastapi import APIRouter, Body, status, HTTPException
 
+# Project imports.
+from settings import DEBUG
 
-load_dotenv('.env')
+
+load_dotenv('.env' if not DEBUG else '.env.dev')
 users: list[dict] = [{"username": os.getenv('USER'), "password": os.getenv('PASSWORD')}]
 
 
