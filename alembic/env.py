@@ -6,6 +6,8 @@ from sqlalchemy import pool
 from alembic import context
 from sqlmodel import SQLModel
 
+from app.models import PlayerDB, TeamDB
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -66,7 +68,10 @@ def run_migrations_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, target_metadata=target_metadata
+            connection=connection,
+            target_metadata=target_metadata,
+            transaction_per_migration=True,  # Ejecutar cada migración en su propia transacción
+            render_as_batch=True  # Necesario para SQLite
         )
 
         with context.begin_transaction():

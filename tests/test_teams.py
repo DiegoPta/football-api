@@ -85,15 +85,15 @@ def test_update_team():
     assert response.json()['id'] == team_id
 
 
-def test_delete_team():
-    team_id = client.get('/teams/').json()[0]['id']
-    response = client.delete(f'/teams/{team_id}', headers={"Authorization": get_token()})
-    assert response.status_code == 200
-    assert response.json()['id'] == team_id
-
-
 def test_get_players_by_team_id():
     team_id = client.get('/teams/').json()[0]['id']
     response = client.get(f'/teams/{team_id}/players', headers={"Authorization": get_token()})
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
+
+def test_delete_team():
+    team_id = client.get('/teams/').json()[0]['id']
+    response = client.delete(f'/teams/{team_id}', headers={"Authorization": get_token()})
+    assert response.status_code == 200
+    assert response.json()['id'] == team_id
