@@ -38,15 +38,14 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_SSH_HOST }}"
-
-          if [ -d football-api ]; then
-            cd football-api
-            docker compose down
-            git pull origin main
-          else
-            git clone https://github.com/DiegoPta/football-api.git
-            cd football-api
-          fi
-
-          docker-compose up -d --build
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_SSH_HOST }} << 'EOF'
+            if [ -d football-api ]; then
+              cd football-api
+              docker compose down
+              git pull origin main
+            else
+              git clone https://github.com/DiegoPta/football-api.git
+              cd football-api
+            fi
+            docker-compose up -d --build
+          EOF
