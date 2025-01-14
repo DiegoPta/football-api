@@ -21,3 +21,32 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+  cd:
+    runs-on: ubuntu-22.04
+    needs: ci
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Config SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_SSH_HOST }}"
+
+          if [ -d football-api ]; then
+            cd football-api
+            docker compose down
+            git pull origin main
+          else
+            git clone https://github.com/DiegoPta/football-api.git
+            cd football-api
+          fi
+
+          docker-compose up -d --build
