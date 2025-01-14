@@ -1,14 +1,13 @@
 name: Football API CD
 
 on:
-  push:
+  pull_request:
     branches:
       - main
 
 jobs:
-  cd:
+  CD:
     runs-on: ubuntu-22.04
-    needs: ci
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

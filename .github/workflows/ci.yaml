@@ -3,10 +3,10 @@ name: Football API CI
 on:
   push:
     branches:
-      - '**'
+      - 'dev'
 
 jobs:
-  ci:
+  CI:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
