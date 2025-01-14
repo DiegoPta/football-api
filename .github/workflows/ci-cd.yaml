@@ -22,7 +22,7 @@ jobs:
         run: pip3 install -r requirements.txt
 
       - name: Execute migrations
-        run: 'alembic -x db_url=sqlite:///./database.db: upgrade head'
+        run: 'alembic -x db_url=sqlite:///:memory: upgrade head'
 
       - name: Run tests
         run: pytest
