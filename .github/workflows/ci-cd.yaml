@@ -23,7 +23,7 @@ jobs:
 
       - name: Execute migrations
         run: |
-          apt-get install sqlite3
+          sudo apt-get install sqlite3
           sqlite3 /path/to/your/project/database.sqlite "VACUUM;"
           alembic upgrade head
 
