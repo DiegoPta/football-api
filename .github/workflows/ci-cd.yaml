@@ -22,10 +22,7 @@ jobs:
         run: pip3 install -r requirements.txt
 
       - name: Execute migrations
-        run: |
-          sudo apt-get install sqlite3
-          sqlite3 ./database.db "VACUUM;"
-          alembic upgrade head
+        run: alembic -x db_url=sqlite:///./database.db: upgrade head
 
       - name: Run tests
         run: pytest
