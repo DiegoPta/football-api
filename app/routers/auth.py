@@ -8,8 +8,11 @@ from dotenv import load_dotenv
 from fastapi import Request
 from fastapi import APIRouter, Body, status, HTTPException
 
+# Project imports.
+from settings import DEBUG
 
-load_dotenv('.env')
+
+load_dotenv('.env' if not DEBUG else '.env.dev')
 users: list[dict] = [{"username": os.getenv('USER'), "password": os.getenv('PASSWORD')}]
 
 
@@ -51,5 +54,5 @@ def login_user(username: str = Body(), password: str = Body()) -> dict:
     """
     if user := next(filter(lambda u: u['username'] == username, users), None):
         if user['password'] == password:
-            return {'token': f'Bearer {jwt.encode(user, os.getenv('SECRET_KEY'), algorithm='HS256')}'}
+            return {'token': f"Bearer {jwt.encode(user, os.getenv('SECRET_KEY'), algorithm='HS256')}"}
     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid data!')

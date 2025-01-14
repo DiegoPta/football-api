@@ -15,4 +15,4 @@ RUN apk add --no-cache --virtual .build-deps gcc libc-dev make \
 
 USER apiuser
 
-CMD ["uvicorn", "app.main:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8080"]

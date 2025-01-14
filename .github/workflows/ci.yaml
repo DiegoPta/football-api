@@ -1,0 +1,22 @@
+name: Football API CI
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  ci:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: pip3 install -r requirements.txt
+
+      - name: Execute migrations
+        run: alembic upgrade head
+
+      - name: Run tests
+        run: pytest

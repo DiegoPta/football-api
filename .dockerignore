@@ -7,3 +7,4 @@ alembic.ini
 alembic/
 .venv/.pytest_cache/
 .git
+database.db
